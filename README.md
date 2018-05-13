@@ -1,5 +1,13 @@
 # CarND-Path-Planning-Project
 Self-Driving Car Engineer Nanodegree Program
+
+## Reflection
+
+I have used Frenet transfomrations along with Spline to make the code work. In Frenet coordinates add 3 evenly spaced s value of 30ms ahead of the starting reference point while d being dynamic(main.cpp Line No:372). It's important to note that d is the distance from the center of the road and s is the distance along the highway in Frenet coordinate. This is to make the car's projected path smooth. We also consider few of the previous points to make the trajectory smooth. Now we use spline to split our trajectory into 50 evenly spaced points and the car would travel each point in 0.02 second. We do this by first converting the 3 points chosen in Frenet coordinate to vehicle coordinate and approximating them to 50 equally spaced points(main.cpp Line No:415).
+
+We give a constant value of 0.224 for acceleration to increase or to decrease for reducing jerk. We tarvel at a maximum speed possible if there is no car in front of us. I chose the maximum velocity to be 49.5 mph as 50 is the speed limit. Check for cars that are 30ms in front of you in your lane so that you can slow down to avoid collision. Check for cars in the right lane of your current lane if you are not on the right most lane already. Then predict whether you have cars that are 30ms ahead or behind you in that lane as it may cause problem while your shift to that lane which may cause a collision. Do the same check fot the left lane. Reduce acceleration if the car in front of us is too close to us. If you are in the middle lane, check if left lane is free and shift. Thus we are giving preference to the left lane shifting. If not check whether right lane is free and shift. If you are in the left most lane, check if the right lane is free and shift. If you are in the right most lane, check if the left lane is free and shift(main.cpp Line No:261 till 338). This way I am able make the car drive through the simulator.
+
+
    
 ### Simulator.
 You can download the Term3 Simulator which contains the Path Planning Project from the [releases tab (https://github.com/udacity/self-driving-car-sim/releases/tag/T3_v1.2).
